@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bloodmap :: একটি ওপেনসোর্স ওয়েব সার্ভিস</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrapValidator -->
+    <link href="assets/css/bootstrapValidator.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Parse Javascript SDK -->
+    <script src="https://www.parsecdn.com/js/parse-1.2.19.min.js"></script>    
+  </head>
+    <div class="container-fluid">
+      <div class="row bloodmap-profile">
+        <div class="col-md-4 col-md-offset-4">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img class="media-object" src="http://placehold.it/50x50" alt="Profile Picture">
+            </a>
+            <div class="media-body">
+              <h4 class="media-heading">স্বাগতম আপনাকে!</h4>
+              <span id="fetchedEmail"></span>
+              <button type="button" class="btn btn-danger btn-xs" id="sign-out">সাইন আউট করুন</button>
+            </div>
+          </div>
+        </div>  
+      </div>      
+      <div class="row bloodmap-sign-box">
+        <div class="col-md-4 col-md-offset-4">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+              <a href="#sign-in" role="tab" data-toggle="tab">সাইন ইন</a>
+            </li>
+            <li><a href="#sign-up" role="tab" data-toggle="tab">সাইন আপ</a></li>
+            <li><a href="#privacy" role="tab" data-toggle="tab">গোপনীয়তা</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="sign-in">
+              <form class="form-horizontal" role="form" id="sign-in-form" 
+                data-bv-message="সঠিক তথ্য দিন"
+                data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" >
+                <div class="alert" style="display: none;"></div>
+                <div class="form-group">                  
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="ইমেইল অ্যাড্রেস" 
+                    data-bv-notempty="true"
+                    data-bv-notempty-message="ইমেইল অ্যাড্রেস বাধ্যতামূলক"
+                    data-bv-emailaddress="true"
+                    data-bv-emailaddress-message="ইমেইল অ্যাড্রেসটি সঠিক নয়" >
+                  </div>
+                </div>
+                <div class="form-group">                  
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="পাসওয়ার্ড" 
+                    data-bv-notempty="true"
+                    data-bv-notempty-message="পাসওয়ার্ড বাধ্যতামূলক" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" class="btn btn-primary btn-block">সাইন ইন করুন</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane" id="sign-up">
+              <form class="form-horizontal" role="form" id="sign-up-form"
+                data-bv-message="সঠিক তথ্য দিন"
+                data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                <div class="alert" style="display: none;"></div>
+                <div class="form-group">                  
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <input type="email" class="form-control" id="signup-email" name="signup-email" placeholder="ইমেইল অ্যাড্রেস" 
+                    data-bv-notempty="true"
+                    data-bv-notempty-message="ইমেইল অ্যাড্রেস বাধ্যতামূলক"
+                    data-bv-emailaddress="true"
+                    data-bv-emailaddress-message="ইমেইল অ্যাড্রেসটি সঠিক নয়" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <input type="password" class="form-control" id="signup-password" name="signup-password" placeholder="পাসওয়ার্ড" 
+                    data-bv-notempty="true"
+                    data-bv-notempty-message="পাসওয়ার্ড বাধ্যতামূলক"
+                    data-bv-identical="true"
+                    data-bv-identical-field="confirm-password"
+                    data-bv-identical-message="পাসওয়ার্ড এবং কনফার্ম পাসওয়ার্ড এক রকম হয়নি">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="পাসওয়ার্ড কনফার্ম করুন" 
+                    data-bv-notempty="true"
+                    data-bv-notempty-message="কনফার্ম পাসওয়ার্ড বাধ্যতামূলক"
+
+                    data-bv-identical="true"
+                    data-bv-identical-field="signup-password"
+                    data-bv-identical-message="পাসওয়ার্ড এবং কনফার্ম পাসওয়ার্ড এক রকম হয়নি">
+                  </div>
+                </div>                
+                <div class="form-group">
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" class="btn btn-primary btn-block">সাইন আপ করুন</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+            <div class="tab-pane" id="privacy">
+              <p>এটি একটি ওপেনসোর্স ওয়েব সার্ভিস যা এই টিউটোরিয়াল কোর্সের উদাহরণ হিসেবে ডেভেলপ করা হচ্ছে জাভাস্ক্রিপ্ট এবং parse.com এপিআই এর উপর ভিত্তি করে</p>
+              <p>এখানে ইনপুট হিসেবে নেয়া আপনার তথ্য গুলো এনকোডেড এবং গোপন অবস্থায় থাকে। কোনভাবেই এই তথ্য অন্য মাধ্যমে হস্তান্তর হয় না।</p>
+              <p>এটি ভবিষ্যতে পাবলিক ওয়েব সার্ভিস হিসেবে লঞ্চ হতে পারে।</p>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <!-- bootstrapValidator -->
+    <script src="assets/js/bootstrapValidator.min.js"></script>
+    <!-- js for doing parse interactiions from the client app (js app) -->
+    <script src="assets/js/main.js"></script>
+
+  </body>
+</html>
